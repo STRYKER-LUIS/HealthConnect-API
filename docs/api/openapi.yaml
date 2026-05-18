@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: HealthConnect API
+  description: API funcional para el MVP de gestión y optimización de consultas médicas.
+  version: 1.0.0
+paths:
+  /appointments:
+    post:
+      summary: Registrar una solicitud de cita (Paciente)
+      description: Permite a un paciente ingresar sus datos básicos para solicitar una cita médica.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - patient_name
+                - phone
+                - specialty
+              properties:
+                patient_name:
+                  type: string
+                  example: "Luis Diaz"
+                phone:
+                  type: string
+                  example: "12345678"
+                specialty:
+                  type: string
+                  example: "Pediatria"
+      responses:
+        '201':
+          description: Cita creada exitosamente de forma pendiente.
+        '400':
+          description: Error 400 - Datos de entrada inválidos o faltantes.
+
+    get:
+      summary: Listar todas las citas médicas
+      description: Permite obtener el listado general de citas registradas en el sistema.
+      responses:
+        '200':
+          description: Listado obtenido con éxito.
+
+  /appointments/{id}:
+    get:
+      summary: Consultar el estado de una cita (Paciente / Administrativo)
+      description: Obtiene el detalle completo y estado actual de una cita usando su ID único.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Detalle de la cita encontrado.
+        '404':
+          description: Error 404 - Cita no encontrada.
+
+  /appointments/{id}/status:
+    patch:
+      summary: Asignar médico o cambiar estado de la cita (Administrativo / Médico)
+      description: Permite actualizar el estado de la cita (ej. cambiar a 'Asignada' o 'Finalizada') y asignar un médico responsable.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  example: "Asignada"
+                doctor_name:
+                  type: string
+                  example: "Dr. Perez"
+      responses:
+        '200':
+          description: Estado de la cita actualizado con éxito.
+        '400':
+          description: Error 400 - Estado no válido o asignación incorrecta.
+        '404':
+          description: Error 404 - Cita no encontrada.

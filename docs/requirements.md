@@ -1,7 +1,7 @@
 # Requerimientos del Sistema - HealthConnect
 
 ## 1. Enlace al Backlog
-Consulte el tablero de gestión del proyecto aquí: 
+Consulte el tablero de gestión del proyecto aquí:
 [https://github.com/users/STRYKER-LUIS/projects/1/views/4?layout=board]
 
 ## 2. Lista de Historias de Usuario
